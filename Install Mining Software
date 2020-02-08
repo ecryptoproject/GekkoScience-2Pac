@@ -1,0 +1,21 @@
+Install Mining Software:
+sudo apt-get update
+sudo apt-get upgrade -y
+
+sudo apt-get install -y build-essential git autoconf automake libtool pkg-config libcurl4-openssl-dev libudev-dev libusb-1.0-0-dev libncurses5-dev
+
+mkdir -p mining/2pac; cd mining/2pac
+git clone https://github.com/vthoang/cgminer.git
+cd cgminer
+
+CFLAGS="-O2" ./autogen.sh --enable-gekko
+make -j 2
+
+CFLAGS="-O2 -march=native" ./autogen.sh --enable-gekko
+make -j 2
+
+./cgminer -n
+
+Strat Miner:
+cd ~/mining/2pac/cgminer
+./cgminer -o stratum+tcp://POOL -u WORKER -p x --suggest-diff 32 --gekko-2pac-freq 150
